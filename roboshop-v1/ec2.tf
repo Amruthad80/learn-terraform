@@ -8,6 +8,14 @@ resource "aws_instance" "frontend" {
   }
 }
 
+resource "aws_route53_record" "frontend" {
+  zone_id = "Z0920686IGN3402SVP12"
+  name    = "frontend.dev.devopsb72.online"
+  type    = "A"
+  ttl     = 15
+  records = [aws_instance.frontend.privtae_ip]
+}
+
 resource "aws_instance" "mongo" {
   ami           = "ami-041e2ea9402c46c32"
   instance_type = "t3.small"
