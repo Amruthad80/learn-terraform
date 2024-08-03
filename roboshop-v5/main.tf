@@ -19,7 +19,7 @@ resource "aws_route53_record" "dns_record" {
   records = [aws_instance.instance[each.key].private_ip]
 }
 
-resouce "null_resource" "ansible" {
+resource "null_resource" "ansible" {
     depends_on = [aws_route53_record.dns_record]
     for_each = var.components
     provisioner "remote-exec" {
@@ -28,7 +28,7 @@ resouce "null_resource" "ansible" {
             password = "DevOps321"
             host = aws_instance.instance[each.key].private_ip
             }
-        inline -[
+        inline [
             "sudo pip-3.11 install ansible",
             "ansible-pull -i localhost, -u https://github.com/Amruthad80/ansible-roboshop min.yml -e env=dev -e role_name=${each_key}"
         ]
