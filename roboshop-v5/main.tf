@@ -28,7 +28,7 @@ resource "null_resource" "ansible" {
             user = "ec2_user"
             password = "DevOps321"
             host = aws_instance.instance[each.key].private_ip
-            }
+        }
         inline = [
             "sudo pip-3.11 install ansible",
             "ansible-pull -i localhost, -u https://github.com/Amruthad80/ansible-roboshop main.yml -e env=dev -e role_name=$[each_key]"
